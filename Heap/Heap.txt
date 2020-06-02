@@ -1,4 +1,9 @@
 /*
+Heap :
+    - The Heap is memory that the programmer can use for the application in a more manual way. 
+       You have to allocate memory, use it, and then free it up afterwords all by hand.
+
+
 Heap Data Structure:
     
     - a special Tree-based data structure, a complete binary Tree

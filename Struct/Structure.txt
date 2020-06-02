@@ -1,0 +1,141 @@
+/*
+Structure : 
+
+    - A user defined data type in C/C++ (In Java, Structure is similar to a class)
+    - Creating a data type that can be used to group items of possibly different types into a single type
+    - In C++, the struct keyword is optional
+
+    Limitations
+        1) Not allow the strcut data type to be treated like built-in data types:
+        2) Cannot use operators like +,- etc on Structure variables
+            ex)
+                struct example ex1, ex2, ex3;
+                ex1.x = 1;
+                ex2.x = 2;
+                ex3.x = 3;
+                ex3 = ex1 + ex2; // error : invalid operands to binary + (have 'struct example' + 'struct example') 
+        3) No Data hiding - can be accessed by any function
+        4) No function    - Do not permit functions inside Structure - only variables
+        5) No static      - Cannot have static members inside their body
+        6) No access modifires - Do not support access modifiers (private, public, default, protected)
+        7) No contructor
+*/
+
+ex)
+struct address 
+{ 
+    char name[50]; 
+    char street[100]; 
+    char city[50]; 
+    char state[20]; 
+    int pin; 
+};
+
+ex2)
+// A variable declaration with structure declaration. 
+struct Point 
+{ 
+    int x, y; 
+} p1; // The variable p1 is declared with 'Point' 
+
+
+// A variable declaration like basic data types 
+struct Point 
+{ 
+    int x, y; 
+}; 
+
+int main() 
+{ 
+    struct Point p1; // The variable p1 is declared like a normal variable 
+}
+
+// cannot be initialized
+struct Point 
+{ 
+    int x = 0; // COMPILER ERROR: cannot initialize members here 
+    int y = 0; // COMPILER ERROR: cannot initialize members here 
+}; 
+
+// can be initialized using '{}'
+struct Point 
+{ 
+    int x, y, z; 
+}; 
+
+int main() 
+{ 
+    // Option 1
+    // A valid initialization. member x gets value 0 and y 
+    // gets value 1. The order of declaration is followed. 
+    struct Point p1 = {0, 1, 2}; 
+
+    // Option 2
+    // Examples of initialization using designated initialization 
+    struct Point p1 = {.y = 0, .z = 1, .x = 2}; 
+    struct Point p2 = {.x = 20}; 
+}
+
+// Structure members are accessed using '.'
+#include<stdio.h> 
+
+struct Point 
+{ 
+    int x, y; 
+}; 
+
+int main() 
+{ 
+    struct Point p1 = {0, 1}; 
+
+    // Accessing members of point p1 
+    p1.x = 20; 
+    printf ("x = %d, y = %d", p1.x, p1.y); 
+
+    return 0; 
+}
+
+// array of structure
+#include<stdio.h> 
+
+struct Point 
+{ 
+    int x, y; 
+}; 
+
+int main() 
+{ 
+    // Create an array of structures 
+    struct Point arr[10]; 
+
+    // Access array members 
+    arr[0].x = 10; 
+    arr[0].y = 20; 
+
+    printf("%d %d", arr[0].x, arr[0].y); 
+    return 0; 
+} 
+
+// a structure pointer
+#include<stdio.h> 
+
+struct Point 
+{ 
+    int x, y; 
+}; 
+
+int main() 
+{ 
+    struct Point p1 = {1, 2}; 
+
+    // p2 is a pointer to structure p1 
+    struct Point *p2 = &p1; 
+
+    // Accessing structure members using structure pointer 
+    printf("%d %d", p2->x, p2->y); 
+    return 0; 
+}
+
+
+
+

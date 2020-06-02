@@ -1,0 +1,321 @@
+/*
+Queue :
+
+    - A linear structure which  follows a particular order in which the operations are performed.
+    - Any queue of consumers for a resource where the consumer that came first is served first.
+    - Remove the item the least recently added, like first element
+    - FIFO (First In First Out)
+
+    - used when things don't have to be processed immediately but have to processed in FIFO
+        ex: BFS
+        1) a resource is shared among multiple consumers : CPU, Disk scheduling
+        2) data is transferred asynchronoushly between two processes. 
+            (data not necessaryly received at same rate as sent) : IO Buffers, pipes, fil IO
+
+*/
+
+/*
+C++
+
+functions :
+        1) empty()  - Returns whether the queue is empty.
+        2) size()   - Returns the size of the queue.
+        3) queue::swap() in C++ 
+                    - Exchange the contents of two queues but the queues must be of same type, although sizes may differ.
+        4) queue::emplace() in C++ 
+                    - Insert a new element into the queue container, the new element is added to the end of the queue.
+        5) queue::front() in C++
+                    - Returns a reference to the first element of the queue.
+        6) queue::back() in C++
+                    - Returns a reference to the last element of the queue.
+        7) push(x)  - Adds the element 'x' at the end of the queue.
+        8) pop()    - Deletes the first element of the queue.
+
+
+*/
+ex)
+// CPP code to illustrate 
+// Queue in Standard Template Library (STL) 
+#include <iostream> 
+#include <queue> 
+
+using namespace std; 
+
+void showq(queue <int> gq) 
+{ 
+	queue <int> g = gq; 
+	while (!g.empty()) 
+	{ 
+		cout << '\t' << g.front(); 
+		g.pop(); 
+	} 
+	cout << '\n'; 
+} 
+
+int main() 
+{ 
+	queue <int> gquiz; 
+	gquiz.push(10); 
+	gquiz.push(20); 
+	gquiz.push(30); 
+
+	cout << "The queue gquiz is : "; 
+	showq(gquiz); 
+
+	cout << "\ngquiz.size() : " << gquiz.size(); 
+	cout << "\ngquiz.front() : " << gquiz.front(); 
+	cout << "\ngquiz.back() : " << gquiz.back(); 
+
+	cout << "\ngquiz.pop() : "; 
+	gquiz.pop(); 
+	showq(gquiz); 
+
+	return 0; 
+}
+
+
+/*
+Java
+
+functions :
+    1) add()    - This method is used to add elements at the tail of queue. More specifically, at the last of linked-list if it is used, or according to the priority in case of priority queue implementation.
+    2) peek()   - This method is used to view the head of queue without removing it. It returns Null if the queue is empty.
+    3) element()- This method is similar to peek(). It throws NoSuchElementException when the queue is empty.
+    4) remove() - This method removes and returns the head of the queue. It throws NoSuchElementException when the queue is empty.
+    5) poll()   - This method removes and returns the head of the queue. It returns null if the queue is empty.
+    6) size()   - This method return the no. of elements in the queue.
+
+*/
+
+ex)
+
+// Java orogram to demonstrate working of Queue 
+// interface in Java 
+import java.util.LinkedList; 
+import java.util.Queue; 
+
+public class QueueExample 
+{ 
+public static void main(String[] args) 
+{ 
+	Queue<Integer> q = new LinkedList<>(); 
+
+	// Adds elements {0, 1, 2, 3, 4} to queue 
+	for (int i=0; i<5; i++) 
+	q.add(i); 
+
+	// Display contents of the queue. 
+	System.out.println("Elements of queue-"+q); 
+
+	// To remove the head of queue. 
+	int removedele = q.remove(); 
+	System.out.println("removed element-" + removedele); 
+
+	System.out.println(q); 
+
+	// To view the head of queue 
+	int head = q.peek(); 
+	System.out.println("head of queue-" + head); 
+
+	// Rest all methods of collection interface, 
+	// Like size and contains can be used with this 
+	// implementation. 
+	int size = q.size(); 
+	System.out.println("Size of queue-" + size); 
+} 
+} 
+
+// Queue examples
+ex1)
+// CPP program for array implementation of queue 
+#include <bits/stdc++.h> 
+using namespace std; 
+
+// A structure to represent a queue 
+class Queue 
+{ 
+	public: 
+	int front, rear, size; 
+	unsigned capacity; 
+	int* array; 
+}; 
+
+// function to create a queue of given capacity. 
+// It initializes size of queue as 0 
+Queue* createQueue(unsigned capacity) 
+{ 
+	Queue* queue = new Queue(); 
+	queue->capacity = capacity; 
+	queue->front = queue->size = 0; 
+	queue->rear = capacity - 1; // This is important, see the enqueue 
+	queue->array = new int[(queue->capacity * sizeof(int))]; 
+	return queue; 
+} 
+
+// Queue is full when size 
+// becomes equal to the capacity 
+int isFull(Queue* queue) 
+{ return (queue->size == queue->capacity); } 
+
+// Queue is empty when size is 0 
+int isEmpty(Queue* queue) 
+{ return (queue->size == 0); } 
+
+// Function to add an item to the queue. 
+// It changes rear and size 
+void enqueue(Queue* queue, int item) 
+{ 
+	if (isFull(queue)) 
+		return; 
+	queue->rear = (queue->rear + 1) % queue->capacity; 
+	queue->array[queue->rear] = item; 
+	queue->size = queue->size + 1; 
+	cout << item << " enqueued to queue\n"; 
+} 
+
+// Function to remove an item from queue. 
+// It changes front and size 
+int dequeue(Queue* queue) 
+{ 
+	if (isEmpty(queue)) 
+		return INT_MIN; 
+	int item = queue->array[queue->front]; 
+	queue->front = (queue->front + 1) % queue->capacity; 
+	queue->size = queue->size - 1; 
+	return item; 
+} 
+
+// Function to get front of queue 
+int front(Queue* queue) 
+{ 
+	if (isEmpty(queue)) 
+		return INT_MIN; 
+	return queue->array[queue->front]; 
+} 
+
+// Function to get rear of queue 
+int rear(Queue* queue) 
+{ 
+	if (isEmpty(queue)) 
+		return INT_MIN; 
+	return queue->array[queue->rear]; 
+} 
+
+// Driver code 
+int main() 
+{ 
+	Queue* queue = createQueue(1000); 
+
+	enqueue(queue, 10); 
+	enqueue(queue, 20); 
+	enqueue(queue, 30); 
+	enqueue(queue, 40); 
+
+	cout<<dequeue(queue)<<" dequeued from queue\n"; 
+
+	cout << "Front item is " << front(queue) << endl; 
+	cout << "Rear item is " << rear(queue) << endl; 
+
+	return 0; 
+} 
+
+// This code is contributed by rathbhupendra 
+
+ex2)
+// Java program for array implementation of queue 
+
+// A class to represent a queue 
+class Queue 
+{ 
+	int front, rear, size; 
+	int capacity; 
+	int array[]; 
+	
+	public Queue(int capacity) { 
+		this.capacity = capacity; 
+		front = this.size = 0; 
+		rear = capacity - 1; 
+		array = new int[this.capacity]; 
+			
+	} 
+	
+	// Queue is full when size becomes equal to 
+	// the capacity 
+	boolean isFull(Queue queue) 
+	{ return (queue.size == queue.capacity); 
+	} 
+	
+	// Queue is empty when size is 0 
+	boolean isEmpty(Queue queue) 
+	{ return (queue.size == 0); } 
+	
+	// Method to add an item to the queue. 
+	// It changes rear and size 
+	void enqueue( int item) 
+	{ 
+		if (isFull(this)) 
+			return; 
+		this.rear = (this.rear + 1)%this.capacity; 
+		this.array[this.rear] = item; 
+		this.size = this.size + 1; 
+		System.out.println(item+ " enqueued to queue"); 
+	} 
+	
+	// Method to remove an item from queue. 
+	// It changes front and size 
+	int dequeue() 
+	{ 
+		if (isEmpty(this)) 
+			return Integer.MIN_VALUE; 
+		
+		int item = this.array[this.front]; 
+		this.front = (this.front + 1)%this.capacity; 
+		this.size = this.size - 1; 
+		return item; 
+	} 
+	
+	// Method to get front of queue 
+	int front() 
+	{ 
+		if (isEmpty(this)) 
+			return Integer.MIN_VALUE; 
+		
+		return this.array[this.front]; 
+	} 
+		
+	// Method to get rear of queue 
+	int rear() 
+	{ 
+		if (isEmpty(this)) 
+			return Integer.MIN_VALUE; 
+		
+		return this.array[this.rear]; 
+	} 
+} 
+
+	
+// Driver class 
+public class Test 
+{ 
+	public static void main(String[] args) 
+	{ 
+		Queue queue = new Queue(1000); 
+			
+		queue.enqueue(10); 
+		queue.enqueue(20); 
+		queue.enqueue(30); 
+		queue.enqueue(40); 
+		
+		System.out.println(queue.dequeue() + 
+					" dequeued from queue\n"); 
+		
+		System.out.println("Front item is " + 
+							queue.front()); 
+		
+		System.out.println("Rear item is " + 
+								queue.rear()); 
+	} 
+} 
+
+// This code is contributed by Gaurav Miglani 
+
